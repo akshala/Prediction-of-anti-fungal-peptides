@@ -9,13 +9,16 @@ codes = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', '
 
 def transform(Sequence):
 	element = []
+	n = len(Sequence)
 	for amino_acid in codes:
-		composition = Sequence.count(amino_acid)
+		r = Sequence.count(amino_acid)
+		composition = r/n
 		element.append(composition)
 	return element
 
 train_data = pd.read_csv("train.csv")
 X_train = train_data['Sequence'].apply(lambda x: transform(x))
+print(X_train[0])
 y_train = train_data['Lable']
 
 max_length = max(X_train.transform(lambda x: len(x)))
@@ -34,11 +37,11 @@ X_test = to_categorical(X_test)
 n,nx,ny = X_test.shape
 X_test = X_test.reshape(n,nx*ny)
 
-model = RandomForestClassifier(n_estimators=20,random_state=0)
-# model = LogisticRegression()
-model.fit(X_train, y_train)
+# model = RandomForestClassifier(n_estimators=20,random_state=0)
+# # model = LogisticRegression()
+# model.fit(X_train, y_train)
 
-Y_preds = model.predict(X_test)
-print(Y_preds)
-results = pd.DataFrame({'ID':testing_data['ID'],'Label':Y_preds})
-results.to_csv(r'random_forest_amino_count.csv',index=False,header=True)
+# Y_preds = model.predict(X_test)
+# print(Y_preds)
+# results = pd.DataFrame({'ID':testing_data['ID'],'Label':Y_preds})
+# results.to_csv(r'random_forest_amino_count.csv',index=False,header=True)
