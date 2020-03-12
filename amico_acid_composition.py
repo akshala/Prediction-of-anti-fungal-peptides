@@ -5,12 +5,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn import svm
 
+codes = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y']
+
 def transform(Sequence):
-	element_copy = []
-	for char in Sequence:
-		r = Sequence.find(char)
-		element_copy.append(r)
-	return element_copy
+	element = []
+	for amino_acid in codes:
+		composition = Sequence.find(amino_acid)
+		element.append(composition)
+	return element
 
 train_data = pd.read_csv("train.csv")
 X_train = train_data['Sequence'].apply(lambda x: transform(x))
@@ -32,11 +34,11 @@ X_test = to_categorical(X_test)
 n,nx,ny = X_test.shape
 X_test = X_test.reshape(n,nx*ny)
 
-# model = RandomForestClassifier(n_estimators=20,random_state=0)
-model = LogisticRegression()
+model = RandomForestClassifier(n_estimators=20,random_state=0)
+# model = LogisticRegression()
 model.fit(X_train, y_train)
 
 Y_preds = model.predict(X_test)
 print(Y_preds)
 results = pd.DataFrame({'ID':testing_data['ID'],'Label':Y_preds})
-results.to_csv(r'aac_logistic.csv',index=False,header=True)
+results.to_csv(r'random_forest_amino_count.csv',index=False,header=True)
