@@ -10,7 +10,7 @@ codes = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', '
 def transform(Sequence):
 	element = []
 	for amino_acid in codes:
-		composition = Sequence.find(amino_acid)
+		composition = Sequence.count(amino_acid)
 		element.append(composition)
 	return element
 
