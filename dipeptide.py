@@ -25,7 +25,8 @@ def transform(Sequence):
 	for amino_acid in codes2:
 		count = 0
 		for i in range(n - 1):
-			if(amino_acid.find(Sequence[i]) != -1 && amino_acid.find(Sequence[i + 1]) != -1):
+			if(amino_acid.find(Sequence[i]) + amino_acid.find(Sequence[i + 1]) == 1):
+				# print(amino_acid, Sequence[i], Sequence[i + 1])
 				count += 1
 		element.append(count)
 	print(len(element))
@@ -35,6 +36,13 @@ def transform(Sequence):
 for i in range(20):
 	for j in range(i, 20):
 		codes2.append(codes[i] + codes[j])
+
+print(codes2)
+print(len(codes2))
+# Sequence = "DAAD"
+# print(transform("DAAD"));
+
+
 
 train_data = pd.read_csv("train.csv")
 X_train = train_data['Sequence'].apply(lambda x: transform(x))
