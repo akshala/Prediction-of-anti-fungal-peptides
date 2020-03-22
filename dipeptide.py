@@ -22,24 +22,19 @@ def transform(Sequence):
 	print("Here here here")
 	element = []
 	n = len(Sequence)
-	for amino_acid in codes:
+	for amino_acid in codes2:
 		count = 0
 		for i in range(n - 1):
-			code = Sequence[i]+Sequence[i + 1]
-			if(code == amino_acid):
+			if(amino_acid.find(Sequence[i]) != -1 && amino_acid.find(Sequence[i + 1]) != -1):
 				count += 1
 		element.append(count)
 	print(len(element))
 	return element
 
-for x in codes:
-	for y in codes:
-		codes2.append(x+y)
 
-int i = 0;
-for code in codes2:
-	d[code] = i
-	i += 1
+for i in range(20):
+	for j in range(i, 20):
+		codes2.append(codes[i] + codes[j])
 
 train_data = pd.read_csv("train.csv")
 X_train = train_data['Sequence'].apply(lambda x: transform(x))
